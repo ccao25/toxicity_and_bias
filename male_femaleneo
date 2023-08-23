@@ -1,28 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-
-
-
-# In[1]:
-
-
-get_ipython().system('pip install datasets transformers evaluate -q')
-get_ipython().system('pip install torch')
-get_ipython().system('pip install xformers')
-
-
-# In[2]:
+!pip install datasets transformers evaluate -q
+!pip install torch
+!pip install xformers
 
 
 import json
 import requests
-
-
-# In[3]:
 
 
 API_TOKEN = "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"
@@ -52,20 +34,11 @@ parameters = {
 #      "end_sequence": "###"  # stopping sequence for generation
 }
 
-# prompt="...."             # few-shot prompt
-
-# data = get_completion(prompt,parameters,options)
-
-
-# In[4]:
-
 
 import random
 import evaluate
 from datasets import load_dataset
 
-
-# In[5]:
 
 
 def get_random_prompts(dataset, num_examples=100):
@@ -153,18 +126,6 @@ print('Generated '+ str(len(female_continuations))+ ' female continuations')
 
 for i in female_continuations:
     print(i)
-
-
-# In[14]:
-
-
-# for i in female_continuations:
-#     for q in range(len(female_continuations)):
-#         print(q)
-#         print("\n")
-    
-#     print(i)
-
 
 # In[15]:
 
@@ -256,23 +217,6 @@ print(male_prompts[1])
 print(male_continuations[1])
 
 
-# In[27]:
-
-
-# m_completions = []
-# toxic_male = []
-
-# for text, value in tox_dict.items():
-#     m_completions.append(text)
-#     toxic_male.append(value)
-
-# print(m_completions)     # List of text values
-# print(toxic_male)
-
-
-# In[28]:
-
-
 femaletoxicity_ratio = toxicity.compute(predictions=female_continuations, aggregation="ratio")
 print(femaletoxicity_ratio)
 
@@ -321,23 +265,6 @@ print("\n")
 print(female_prompts[10])
 print(female_continuations[10])
 print(toxic_female[10])
-
-
-# In[34]:
-
-
-# f_completions = []
-# toxic_female = []
-
-# for text, value in tox_dict1.items():
-#     f_completions.append(text)
-#     toxic_female.append(value)
-
-# print(f_completions)     # List of text values
-# print(toxic_female)
-
-
-# In[35]:
 
 
 all_regard = regard.compute(data = male_continuations, references= female_continuations)
@@ -394,251 +321,8 @@ with open(file_path, 'w', newline='',encoding='utf-8') as csvfile:
     writer.writerow([all_regard, avg_regard])  # Write data rows
     writer.writerow([honest_score])  # Write data rows
 
-#     for toxic_prompts, completion, toxicity_val in data.items():
-#         writer.writerow([key, value])
-
-#         with open('Names.csv', 'w') as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=field_names)
-#     writer.writeheader()
-#     writer.writerows(cars)
-
 print(f"CSV file '{file_path}' has been created successfully.")
 
-
-# In[ ]:
-
-
-regard.compute(data = male_continuations, references= female_continuations)
-
-
-# In[ ]:
-
-
-regard.compute(data = male_continuations, references= female_continuations, aggregation = 'average')
-
-
-# In[ ]:
-
-
-# for i in range(51):
-#     print(i)
-
-
-# In[ ]:
-
-
-# # Assuming you have the male_continuations list and an empty result list
-# m_continuations = []
-
-# # Iterate over each male_continuation, print the text, and add it to the result list
-
-# for m in range(51):
-#     for i in male_continuations:
-# #     print(i)
-#         m_continuations.insert(m,i)
-
-
-
-    
-# for i in m_continuations:
-#     for q in range(len(m_continuations)):
-#         print(q)
-#         print("\n")
-    
-#     print(i)   
-
-# # Assuming you have the male_continuations list and an empty result list
-# f_continuations = []
-
-# # Iterate over each male_continuation, print the text, and add it to the result list
-# for i in female_continuations:
-# #     print(i)
-#     f_continuations.append(i)
-
-
-# In[ ]:
-
-
-# # for i in male_continuations:
-# #     print(i)
-
-# # for i in range(1, 51):
-# regard.compute(data = male_continuations, references= female_continuations, aggregation = 'average')
-# print(male_continuations[50])
-# print(female_continuations[50])
-
-
-# for i in range(len(male_continuations)):
-#     regard_dict= {}
-#     all_regard = regard.compute(data = male_continuations, references= female_continuations)
-#     print(all_regard)
-    
-    # Print the regard scores for each male_continuation
-
-for i in range(len(m_continuations)):
-    regard_scores = regard.compute(data=m_continuations[i], references=f_continuations)
-    print(regard_scores)
-
-# for male_continuation, regard_score in regard_scores.items():
-#     print(f"Regard score for male_continuation '{male_continuation}': {regard_score}")
-
-
-
-# In[ ]:
-
-
-honest = evaluate.load('honest', 'en')
-
-
-# In[ ]:
-
-
-groups = ['male'] * 50 + ['female'] * 50
-continuations = [c.split() for c in male_continuations] + [q.split() for q in female_continuations]
-
-
-# In[ ]:
-
-
-honest_score = honest.compute(predictions=continuations, groups = groups)
-print(honest_score)
-
-
-# In[ ]:
-
-
-# for i in male_continuations:
-#     print(i)
-    
-    
-# for i in range(1,51):
-#    print(regard.compute(data=male_continuations[i], references=female_continuations[i], aggregation='average'))
-
-
-# In[ ]:
-
-
-# honest
-
-honest_dataset = load_dataset("MilaNLProc/honest", 'en_queer_nonqueer', split='honest')
-
-
-# In[ ]:
-
-
-from collections import Counter
-categories= [h['category'] for h in honest_dataset]
-Counter(categories)
-
-
-# In[ ]:
-
-
-queer_prompts= sample([h['template_masked'].replace(' [M].','') for h in honest_dataset if h['category'].startswith('queer')], 10)
-nonqueer_prompts= sample([h['template_masked'].replace(' [M].','') for h in honest_dataset if h['category'].startswith('nonqueer')], 10)
-
-
-# In[ ]:
-
-
-print(queer_prompts[2])
-print(nonqueer_prompts[2])
-
-
-# In[ ]:
-
-
-queer_continuations=[]
-for prompt in queer_prompts:
-  generation = text_generation(prompt, max_length=len(tokenizer(prompt)['input_ids'])+10, num_return_sequences=k, pad_token_id=50256)
-  continuation = generation[0]['generated_text'].replace(prompt,'')
-  queer_continuations.append(continuation)
-
-print('Generated '+ str(len(queer_continuations))+ ' continuations')
-
-# for prompt in male_prompts:
-#     generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-#     continuation = generation[0]['generated_text'].replace(prompt,'')
-#     male_continuations.append(continuation)
-
-# print('Generated '+ str(len(male_continuations))+ ' male continuations')
-
-for i in queer_continuations:
-    print(i)
-
-
-# In[ ]:
-
-
-nonqueer_continuations=[]
-for prompt in nonqueer_prompts:
-  generation = text_generation(prompt, max_length=len(tokenizer(prompt)['input_ids'])+10, num_return_sequences=k, pad_token_id=50256)
-  continuation = generation[0]['generated_text'].replace(prompt,'')
-  nonqueer_continuations.append(continuation)
-
-print('Generated '+ str(len(nonqueer_continuations))+ ' continuations')
-
-for i in nonqueer_continuations:
-    print(i)
-
-
-# In[ ]:
-
-
-get_ipython().system('pip install unidecode')
-
-
-# In[ ]:
-
-
-honest = evaluate.load('/content/evaluate/measurements/honest', 'en')
-
-
-# In[ ]:
-
-
-groups = ['queer'] * 50 + ['nonqueer'] * 50
-continuations = [c.split() for c in queer_continuations] + [q.split() for q in nonqueer_continuations]
-
-
-# In[ ]:
-
-
-honest_score = honest.compute(predictions=continuations, groups = groups)
-print(honest_score)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
