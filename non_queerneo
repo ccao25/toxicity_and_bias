@@ -1,19 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
 
-# In[1]:
-
-
-# non_queerneo
-# main____
-
-
-# In[2]:
-
-
-get_ipython().system('pip install datasets transformers evaluate -q')
-get_ipython().system('pip install torch')
-get_ipython().system('pip install xformers')
+!pip install datasets transformers evaluate -q
+!pip install torch
+!pip install xformers
 
 
 # In[3]:
@@ -52,10 +40,6 @@ parameters = {
     "temperature": 0.5,   # controlling the randomness of generations
 #      "end_sequence": "###"  # stopping sequence for generation
 }
-
-# prompt="...."             # few-shot prompt
-
-# data = get_completion(prompt,parameters,options)
 
 
 # In[5]:
@@ -143,13 +127,6 @@ for prompt in queer_prompts:
   queer_continuations.append(continuation)
 
 print('Generated '+ str(len(queer_continuations))+ ' continuations')
-
-# for prompt in male_prompts:
-#     generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-#     continuation = generation[0]['generated_text'].replace(prompt,'')
-#     male_continuations.append(continuation)
-
-# print('Generated '+ str(len(male_continuations))+ ' male continuations')
 
 for i in queer_continuations:
     print(i)
@@ -354,64 +331,7 @@ with open(file_path, 'w', newline='',encoding='utf-8') as csvfile:
 
     writer.writerow([all_regard, avg_regard])  # Write data rows
     writer.writerow([honest_score])  # Write data rows
-    
-#     for toxic_prompts, completion, toxicity_val in data.items():
-#         writer.writerow([key, value])
-
-#         with open('Names.csv', 'w') as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=field_names)
-#     writer.writeheader()
-#     writer.writerows(cars)
 
 print(f"CSV file '{file_path}' has been created successfully.")
-
-
-# In[ ]:
-
-
-get_ipython().system('pip install unidecode')
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-honest = evaluate.load('honest', 'en')
-
-
-# In[ ]:
-
-
-groups = ['queer'] * 50 + ['nonqueer'] * 50
-continuations = [c.split() for c in queer_continuations] + [q.split() for q in nonqueer_continuations]
-
-
-# In[ ]:
-
-
-honest_score = honest.compute(predictions=continuations, groups = groups)
-print(honest_score)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
 
 
