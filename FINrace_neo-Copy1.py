@@ -1,18 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-# V2
-
-
-# In[2]:
-
-
-get_ipython().system('pip install datasets transformers evaluate -q')
-get_ipython().system('pip install torch')
-get_ipython().system('pip install xformers')
+!pip install datasets transformers evaluate -q
+!pip install torch
+!pip install xformers
 
 
 # In[3]:
@@ -51,10 +39,6 @@ parameters = {
     "temperature": 0.5,   # controlling the randomness of generations
 #      "end_sequence": "###"  # stopping sequence for generation
 }
-
-# prompt="...."             # few-shot prompt
-
-# data = get_completion(prompt,parameters,options)
 
 
 # In[5]:
@@ -108,10 +92,6 @@ latino_bold = ([p for p in bold if p['category'] == 'Hispanic_and_Latino_America
 print(len(latino_bold))
 
 
-# asian_bold[0]
-# print(asian_bold)
-
-
 # In[10]:
 
 
@@ -132,23 +112,13 @@ for i in first_latino_prompts:
         for prompt in i:
             og_latino_prompts.extend([prompt])
             
-# print(latino_prompts)
 print(len(og_latino_prompts))
 
-# print(len([p['prompts'] for p in latino_bold]))
 
 latino_prompts = (sample(og_latino_prompts, 50))
 print(latino_prompts)
 
 print(len(latino_prompts))
-
-
-# euro_prompts[0]
-
-# print(len(asian_prompts))
-# print(asian_prompts)
-
-# political, religion, race in that order
 
 
 # In[11]:
@@ -171,166 +141,9 @@ for prompt in asian_prompts:
 
 print('Generated '+ str(len(asian_continuations))+ ' asian american continuations')
 
-# for i in male_continuations:
-#     print(i)
-
 for i in asian_continuations:
     print(i)
     
-
-
-# In[177]:
-
-
-for i in range(len(asian_prompts)):
-    print(i)
-    print("\n")
-    print(asian_prompts[i])
-
-
-# In[146]:
-
-
-for i in range(len(asian_continuations)):
-    print(i)
-    print("\n")
-    print(asian_continuations[i])
-
-
-# In[169]:
-
-
-print(asian_prompts[35])
-
-
-# In[170]:
-
-
-asian_sample = (sample([p for p in bold if p['category'] == 'Asian_Americans'],1))
-
-asian_replacement_prompt = [p['prompts'][0] for p in asian_sample]
-
-print(asian_replacement_prompt)
-
-for i in range(len(asian_prompts)):
-    while asian_sample == asian_prompts[i]:
-        asian_sample = (sample([p for p in bold if p['category'] == 'Asian_Americans'],1))
-
-        asian_replacement_prompt = [p['prompts'][0] for p in asian_sample]
-
-        print(asian_replacement_prompt) 
-
-
-# In[171]:
-
-
-prompt = asian_replacement_prompt[0]
-generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-continuation = generation[0]['generated_text'].replace(prompt, '')
-
-print(asian_replacement_prompt)
-print(generation)
-print(continuation)
-
-# for i in male_continuations:
-#     print(i)
-
-# for i in asian_continuations:
-#     print(i)
-    
-
-
-# In[172]:
-
-
-# asian_prompts.insert(10, asian_replacement_prompt[0])
-# asian_continuations.insert(10, continuation)
-
-asian_prompts[35] = asian_replacement_prompt[0]
-asian_continuations[35] = continuation
-
-print(asian_prompts[35])
-print(asian_continuations[35])
-
-
-# In[173]:
-
-
-# asian_continuations.pop(13)
-
-
-# In[174]:
-
-
-# print(asian_prompts[25])print(asian_prompts[10])
-# print(asian_continuations[25])
-
-
-# In[175]:
-
-
-print(len(asian_prompts))
-print(asian_prompts)
-
-
-# In[176]:
-
-
-print(len(asian_continuations))
-print(asian_continuations)
-
-# for i in range(len(asian_continuations)):
-#     print(i)
-#     print("\n")
-#     print(asian_continuations[i])
-
-
-# In[ ]:
-
-
-
-
-
-# In[92]:
-
-
-
-
-
-# In[ ]:
-
-
-# generation1 = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-# continuation1 = generation1[0]['generated_text'].replace(prompt,'')
-# # asian_continuations.insert(12, continuation)
-
-# print(asian_prompts[12])
-# # print(asian_continuations[12])
-# print(continuation1)
-
-# # for i in male_continuations:
-# #     print(i)
-
-# # for i in asian_continuations:
-# #     print(i)
-    
-
-    
-#     prompt = asian_prompts[12]
-# generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-# continuation = generation[0]['generated_text'].replace(prompt,'')
-# asian_continuations.insert(12, continuation)
-
-# print(asian_prompts[12])
-# print(asian_continuations[12])
-
-# # for i in male_continuations:
-# #     print(i)
-
-# # for i in asian_continuations:
-# #     print(i)
-    
-
 
 # In[15]:
 
@@ -343,112 +156,9 @@ for prompt in african_prompts:
 
 print('Generated '+ str(len(african_continuations))+ ' african american continuations')
 
-# for i in female_continuations:
-#     print(i)
-
 for i in african_continuations:
     print(i)
     
-
-
-# In[179]:
-
-
-for i in range(len(african_prompts)):
-    print(i)
-    print("\n")
-    print(african_prompts[i])
-
-
-# In[180]:
-
-
-for i in range(len(african_continuations)):
-    print(i)
-    print("\n")
-    print(african_continuations[i])
-
-
-# In[218]:
-
-
-print(african_prompts[44])
-
-
-# In[219]:
-
-
-african_sample = (sample([p for p in bold if p['category'] == 'African_Americans'],1))
-
-african_replacement_prompt = [p['prompts'][0] for p in african_sample]
-
-print(african_replacement_prompt)
-
-for i in range(len(african_prompts)):
-    while african_sample == african_prompts[i]:
-        african_sample = (sample([p for p in bold if p['category'] == 'African_Americans'],1))
-
-        african_replacement_prompt = [p['prompts'][0] for p in african_sample]
-
-        print(african_replacement_prompt) 
-
-
-# In[220]:
-
-
-prompt = african_replacement_prompt[0]
-generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-continuation = generation[0]['generated_text'].replace(prompt, '')
-
-print(african_replacement_prompt)
-print(generation)
-print(continuation)
-
-# for i in male_continuations:
-#     print(i)
-
-# for i in asian_continuations:
-#     print(i)
-    
-
-
-# In[221]:
-
-
-# asian_prompts.insert(10, asian_replacement_prompt[0])
-# asian_continuations.insert(10, continuation)
-
-african_prompts[44] = african_replacement_prompt[0]
-african_continuations[44] = continuation
-
-print(african_prompts[44])
-print(african_continuations[44])
-
-
-# In[222]:
-
-
-print(len(african_prompts))
-print(african_prompts)
-
-
-# In[223]:
-
-
-print(len(african_continuations))
-print(african_continuations)
-
-# for i in range(len(asian_continuations)):
-#     print(i)
-#     print("\n")
-#     print(asian_continuations[i])
-
-
-# In[16]:
-
-
-print(african_continuations[1])
-
 
 # In[17]:
 
@@ -461,105 +171,8 @@ for prompt in euro_prompts:
 
 print('Generated '+ str(len(euro_continuations))+ ' european american continuations')
 
-# for i in female_continuations:
-#     print(i)
-
 for i in euro_continuations:
     print(i)
-    
-
-
-# In[269]:
-
-
-print(euro_prompts[47])
-
-
-# In[276]:
-
-
-euro_sample = (sample([p for p in bold if p['category'] == 'European_Americans'],1))
-
-euro_replacement_prompt = [p['prompts'][0] for p in euro_sample]
-
-print(euro_replacement_prompt)
-
-for i in range(len(euro_prompts)):
-    while euro_sample == euro_prompts[i]:
-        euro_sample = (sample([p for p in bold if p['category'] == 'European_Americans'],1))
-
-        euro_replacement_prompt = [p['prompts'][0] for p in euro_sample]
-
-        print(euro_replacement_prompt) 
-
-
-# In[277]:
-
-
-prompt = euro_replacement_prompt[0]
-generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-continuation = generation[0]['generated_text'].replace(prompt, '')
-
-print(euro_replacement_prompt)
-print(generation)
-print(continuation)
-
-# for i in male_continuations:
-#     print(i)
-
-# for i in asian_continuations:
-#     print(i)
-    
-
-
-# In[278]:
-
-
-# asian_prompts.insert(10, asian_replacement_prompt[0])
-# asian_continuations.insert(10, continuation)
-
-euro_prompts[47] = euro_replacement_prompt[0]
-euro_continuations[47] = continuation
-
-print(euro_prompts[47])
-print(euro_continuations[47])
-
-
-# In[279]:
-
-
-print(len(euro_prompts))
-print(euro_prompts)
-
-
-# In[268]:
-
-
-print(len(euro_continuations))
-print(euro_continuations)
-
-# for i in range(len(asian_continuations)):
-#     print(i)
-#     print("\n")
-#     print(asian_continuations[i])
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
 
 # In[18]:
@@ -573,119 +186,8 @@ for prompt in latino_prompts:
 
 print('Generated '+ str(len(latino_continuations))+ ' latino/hispanic american continuations')
 
-# for i in female_continuations:
-#     print(i)
-
 for i in latino_continuations:
     print(i)
-    
-
-
-# In[408]:
-
-
-print(latino_prompts[44])
-
-
-# In[411]:
-
-
-latino_sample = (sample([p for p in bold if p['category'] == 'Hispanic_and_Latino_Americans'],1))
-
-latino_replacement_prompt = [p['prompts'][0] for p in latino_sample]
-
-print(latino_replacement_prompt)
-
-for i in range(len(latino_prompts)):
-    while latino_sample == latino_prompts[i]:
-        latino_sample = (sample([p for p in bold if p['category'] == 'Hispanic_and_Latino_Americans'],1))
-
-        latino_replacement_prompt = [p['prompts'][0] for p in latino_sample]
-
-        print(latino_replacement_prompt) 
-
-        
-
-
-# In[ ]:
-
-
-
-
-
-# In[412]:
-
-
-prompt = latino_replacement_prompt[0]
-generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-continuation = generation[0]['generated_text'].replace(prompt, '')
-
-print(latino_replacement_prompt)
-print(generation)
-print(continuation)
-
-# for i in male_continuations:
-#     print(i)
-
-# for i in asian_continuations:
-#     print(i)
-    
-
-
-# In[413]:
-
-
-# asian_prompts.insert(10, asian_replacement_prompt[0])
-# asian_continuations.insert(10, continuation)
-
-latino_prompts[44] = latino_replacement_prompt[0]
-latino_continuations[44] = continuation
-
-print(latino_prompts[44])
-print(latino_continuations[44])
-
-
-# In[419]:
-
-
-print(len(latino_prompts))
-print(latino_prompts)
-
-
-# In[422]:
-
-
-print(len(latino_continuations))
-print(latino_continuations)
-
-# for i in range(len(asian_continuations)):
-#     print(i)
-#     print("\n")
-#     print(asian_continuations[i])
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[423]:
-
-
-# for i in female_continuations:
-#     for q in range(len(female_continuations)):
-#         print(q)
-#         print("\n")
-    
-#     print(i)
-
 
 # In[424]:
 
@@ -791,20 +293,6 @@ print(asian_prompts[1])
 print(asian_continuations[1])
 
 
-# In[439]:
-
-
-# m_completions = []
-# toxic_male = []
-
-# for text, value in tox_dict.items():
-#     m_completions.append(text)
-#     toxic_male.append(value)
-
-# print(m_completions)     # List of text values
-# print(toxic_male)
-
-
 # In[440]:
 
 
@@ -856,21 +344,6 @@ print("\n")
 print(african_prompts[10])
 print(african_continuations[10])
 print(toxic_african[10])
-
-
-# In[446]:
-
-
-# f_completions = []
-# toxic_female = []
-
-# for text, value in tox_dict1.items():
-#     f_completions.append(text)
-#     toxic_female.append(value)
-
-# print(f_completions)     # List of text values
-# print(toxic_female)
-
 
 # In[447]:
 
@@ -997,20 +470,6 @@ print(tox_dict3)
 
 # __________________
 
-
-# In[463]:
-
-
-# all_regard = regard.compute(data = asian_continuations, references= african_continuations)
-# print(all_regard)
-
-
-# In[464]:
-
-
-# avg_regard = regard.compute(data = male_continuations, references= female_continuations, aggregation = 'average')
-
-
 # In[465]:
 
 
@@ -1034,8 +493,7 @@ print(honest_score)
 # In[468]:
 
 
-get_ipython().system('pip install xlsxwriter ')
-
+!pip install xlsxwriter 
 
 # In[471]:
 
@@ -1192,252 +650,7 @@ with open(file_path, 'w', newline='',encoding='utf-8') as csvfile:
 #     writer.writerow([all_regard, avg_regard])  # Write data rows
     writer.writerow([honest_score])  # Write data rows
 
-#     for toxic_prompts, completion, toxicity_val in data.items():
-#         writer.writerow([key, value])
-
-#         with open('Names.csv', 'w') as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=field_names)
-#     writer.writeheader()
-#     writer.writerows(cars)
 
 print(f"CSV file '{file_path}' has been created successfully.")
-
-
-# In[ ]:
-
-
-regard.compute(data = male_continuations, references= female_continuations)
-
-
-# In[ ]:
-
-
-regard.compute(data = male_continuations, references= female_continuations, aggregation = 'average')
-
-
-# In[ ]:
-
-
-# for i in range(51):
-#     print(i)
-
-
-# In[ ]:
-
-
-# # Assuming you have the male_continuations list and an empty result list
-# m_continuations = []
-
-# # Iterate over each male_continuation, print the text, and add it to the result list
-
-# for m in range(51):
-#     for i in male_continuations:
-# #     print(i)
-#         m_continuations.insert(m,i)
-
-
-
-    
-# for i in m_continuations:
-#     for q in range(len(m_continuations)):
-#         print(q)
-#         print("\n")
-    
-#     print(i)   
-
-# # Assuming you have the male_continuations list and an empty result list
-# f_continuations = []
-
-# # Iterate over each male_continuation, print the text, and add it to the result list
-# for i in female_continuations:
-# #     print(i)
-#     f_continuations.append(i)
-
-
-# In[ ]:
-
-
-# # for i in male_continuations:
-# #     print(i)
-
-# # for i in range(1, 51):
-# regard.compute(data = male_continuations, references= female_continuations, aggregation = 'average')
-# print(male_continuations[50])
-# print(female_continuations[50])
-
-
-# for i in range(len(male_continuations)):
-#     regard_dict= {}
-#     all_regard = regard.compute(data = male_continuations, references= female_continuations)
-#     print(all_regard)
-    
-    # Print the regard scores for each male_continuation
-
-for i in range(len(m_continuations)):
-    regard_scores = regard.compute(data=m_continuations[i], references=f_continuations)
-    print(regard_scores)
-
-# for male_continuation, regard_score in regard_scores.items():
-#     print(f"Regard score for male_continuation '{male_continuation}': {regard_score}")
-
-
-
-# In[ ]:
-
-
-honest = evaluate.load('honest', 'en')
-
-
-# In[ ]:
-
-
-groups = ['male'] * 50 + ['female'] * 50
-continuations = [c.split() for c in male_continuations] + [q.split() for q in female_continuations]
-
-
-# In[ ]:
-
-
-honest_score = honest.compute(predictions=continuations, groups = groups)
-print(honest_score)
-
-
-# In[ ]:
-
-
-# for i in male_continuations:
-#     print(i)
-    
-    
-# for i in range(1,51):
-#    print(regard.compute(data=male_continuations[i], references=female_continuations[i], aggregation='average'))
-
-
-# In[ ]:
-
-
-# honest
-
-honest_dataset = load_dataset("MilaNLProc/honest", 'en_queer_nonqueer', split='honest')
-
-
-# In[ ]:
-
-
-from collections import Counter
-categories= [h['category'] for h in honest_dataset]
-Counter(categories)
-
-
-# In[ ]:
-
-
-queer_prompts= sample([h['template_masked'].replace(' [M].','') for h in honest_dataset if h['category'].startswith('queer')], 10)
-nonqueer_prompts= sample([h['template_masked'].replace(' [M].','') for h in honest_dataset if h['category'].startswith('nonqueer')], 10)
-
-
-# In[ ]:
-
-
-print(queer_prompts[2])
-print(nonqueer_prompts[2])
-
-
-# In[ ]:
-
-
-queer_continuations=[]
-for prompt in queer_prompts:
-  generation = text_generation(prompt, max_length=len(tokenizer(prompt)['input_ids'])+10, num_return_sequences=k, pad_token_id=50256)
-  continuation = generation[0]['generated_text'].replace(prompt,'')
-  queer_continuations.append(continuation)
-
-print('Generated '+ str(len(queer_continuations))+ ' continuations')
-
-# for prompt in male_prompts:
-#     generation = text_generation(prompt, max_length=50, do_sample=False, pad_token_id=50256)
-#     continuation = generation[0]['generated_text'].replace(prompt,'')
-#     male_continuations.append(continuation)
-
-# print('Generated '+ str(len(male_continuations))+ ' male continuations')
-
-for i in queer_continuations:
-    print(i)
-
-
-# In[ ]:
-
-
-nonqueer_continuations=[]
-for prompt in nonqueer_prompts:
-  generation = text_generation(prompt, max_length=len(tokenizer(prompt)['input_ids'])+10, num_return_sequences=k, pad_token_id=50256)
-  continuation = generation[0]['generated_text'].replace(prompt,'')
-  nonqueer_continuations.append(continuation)
-
-print('Generated '+ str(len(nonqueer_continuations))+ ' continuations')
-
-for i in nonqueer_continuations:
-    print(i)
-
-
-# In[ ]:
-
-
-get_ipython().system('pip install unidecode')
-
-
-# In[ ]:
-
-
-honest = evaluate.load('/content/evaluate/measurements/honest', 'en')
-
-
-# In[ ]:
-
-
-groups = ['queer'] * 50 + ['nonqueer'] * 50
-continuations = [c.split() for c in queer_continuations] + [q.split() for q in nonqueer_continuations]
-
-
-# In[ ]:
-
-
-honest_score = honest.compute(predictions=continuations, groups = groups)
-print(honest_score)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
 
 
